@@ -10,13 +10,13 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage(); 
   
     // Go to the target website 
-    await page.goto(`https://solscan.io/account/${walletAddress}#splTransfer`); 
+    await page.goto(`https://solscan.io/account/${walletAddress}#splTransfers`); 
  
     // Wait for the pagination selector to show up
-    await page.waitForSelector('#rc_select_0', {timeout: TIMEOUT});
+    await page.waitForSelector('#rc_select_1', {timeout: TIMEOUT});
 
     // Locate the pagination selector
-    const dropdownInput = await page.$('#rc_select_0');
+    const dropdownInput = await page.$('#rc_select_1');
 
     const clickable = await dropdownInput.isVisible()
 
@@ -33,11 +33,11 @@ const puppeteer = require('puppeteer');
     }
    
     // Wait for the table to appear on the page
-    const tableSelector = '#rc-tabs-0-panel-default table tbody tr'; 
+    const tableSelector = '#rc-tabs-0-panel-splTransfers table tbody tr'; 
 	  await page.waitForSelector(tableSelector, {timeout: TIMEOUT});
 
     // Grab Table data
-    const data = await page.$$eval('#rc-tabs-0-panel-default table tbody tr',  rows => {
+    const data = await page.$$eval('#rc-tabs-0-panel-splTransfers table tbody tr',  rows => {
         return Array.from(rows, row => {
           const columns = row.querySelectorAll('td');
           return Array.from(columns, column => column.innerText);

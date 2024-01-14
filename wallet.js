@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
     // Initiate the browser 
     const browser = await puppeteer.launch({headless: "new"}); 
     
-    const walletAddress = 'Adgn26Wpe82fySNELDrtgWvQi8AUyuSd4Mt4TRjfiGCf';
+    const walletAddress = '2Fcm8Z3wxjcwjhXiS3mSXeHQY62TYHhNK65zExFWPE6d';
     const TIMEOUT = 5000;
     // Create a new page with the default browser context 
     const page = await browser.newPage(); 

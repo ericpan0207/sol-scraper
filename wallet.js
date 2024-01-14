@@ -10,7 +10,7 @@ const puppeteer = require('puppeteer');
     const page = await browser.newPage(); 
   
     // Go to the target website 
-    await page.goto(`https://solscan.io/account/${walletAddress}`); 
+    await page.goto(`https://solscan.io/account/${walletAddress}#splTransfer`); 
  
     // Wait for the pagination selector to show up
     await page.waitForSelector('#rc_select_0', {timeout: TIMEOUT});
@@ -18,16 +18,20 @@ const puppeteer = require('puppeteer');
     // Locate the pagination selector
     const dropdownInput = await page.$('#rc_select_0');
 
-    // Click to focus on the input (opens the dropdown)
-    await dropdownInput.click();
+    const clickable = await dropdownInput.isVisible()
 
-    // Wait for options to show up
-    await page.waitForSelector('.ant-select-item.ant-select-item-option', {timeout: TIMEOUT})
+    if (clickable) {
+        // Click to focus on the input (opens the dropdown)
+        await dropdownInput.click();
 
-    // Grab dropdown options and select the 4th (50)
-    const options = await page.$$('.ant-select-item.ant-select-item-option');
-    await options[3].click()
+        // Wait for options to show up
+        await page.waitForSelector('.ant-select-item.ant-select-item-option', {timeout: TIMEOUT})
 
+        // Grab dropdown options and select the 4th (50)
+        const options = await page.$$('.ant-select-item.ant-select-item-option');
+        await options[3].click()
+    }
+   
     // Wait for the table to appear on the page
     const tableSelector = '#rc-tabs-0-panel-default table tbody tr'; 
 	  await page.waitForSelector(tableSelector, {timeout: TIMEOUT});

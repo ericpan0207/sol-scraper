@@ -19,16 +19,19 @@ const fs = require('fs');
     // Locate the pagination selector
     const dropdownInput = await page.$('#rc_select_1');
 
-    // Click to focus on the input (opens the dropdown)
-    await dropdownInput.click();
+    const clickable = await dropdownInput.isVisible()
+    if (clickable) {
+        // Click to focus on the input (opens the dropdown)
+        await dropdownInput.click();
 
-    // Wait for options to show up
-    await page.waitForSelector('.ant-select-item.ant-select-item-option', {timeout: TIMEOUT})
+        // Wait for options to show up
+        await page.waitForSelector('.ant-select-item.ant-select-item-option', {timeout: TIMEOUT})
 
-    // Grab dropdown options and select the 4th (50)
-    const options = await page.$$('.ant-select-item.ant-select-item-option');
-    await options[3].click()
-
+        // Grab dropdown options and select the 4th (50)
+        const options = await page.$$('.ant-select-item.ant-select-item-option');
+        await options[3].click()
+    }
+    
     // Wait for the table to appear on the page
     const tableSelector = '#rc-tabs-0-panel-holders table tbody tr'; 
 	  await page.waitForSelector(tableSelector, {timeout: TIMEOUT});
